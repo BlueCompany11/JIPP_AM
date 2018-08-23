@@ -97,7 +97,7 @@ namespace JIPP_AM
             Graphics graphics = tableLayoutPanel1.CreateGraphics();
             graphics.Clear(tableLayoutPanel1.BackColor);
             //TRZEBA PODMIENIC SCIEZKE
-            Image image = Image.FromFile(@"C:\Users\BlueCompany\source\repos\JIPP_AM\JIPP_AM\person.png");
+            Image image = Image.FromFile(@"..\JIPP_AM\person.png");
             var bmp = new Bitmap(image, new Size(pictureWidth, pictureHeight));
             bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
             graphics.DrawImage(bmp, dx, dy);
