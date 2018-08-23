@@ -36,6 +36,8 @@ namespace JIPP_AM
             {
                 timer.Enabled = false;
             });
+            // druga reakcja na zdarzenie dotarcia do punktu przeznaczenia jest wyswietlenie obrazka do gory nogami
+            DestinationReached += RotatePicture;
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -50,12 +52,15 @@ namespace JIPP_AM
         //metoda wywolywana przy wcisnieciu myszki
         private void tableLayoutPanel1_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine(e.Location.X.ToString()+" "+e.Location.Y.ToString());
-            //pobieram lokalizacje gdzie zostala wcisnieta myszka
-            //odejmowanie ma spowodowac, ze obrazek poruszy sie w swoje centrum
-            dxDest = e.Location.X - pictureWidth/2;
-            dyDest = e.Location.Y - pictureHeight/2;
-            timer.Enabled = true;
+            if(e.Clicks == 1)
+            {
+                Console.WriteLine(e.Location.X.ToString() + " " + e.Location.Y.ToString());
+                //pobieram lokalizacje gdzie zostala wcisnieta myszka
+                //odejmowanie ma spowodowac, ze obrazek poruszy sie w swoje centrum
+                dxDest = e.Location.X - pictureWidth / 2;
+                dyDest = e.Location.Y - pictureHeight / 2;
+                timer.Enabled = true;
+            }
         }
         private void MoveToTheDirection()
         {
@@ -79,12 +84,22 @@ namespace JIPP_AM
         }
         void Draw()
         {
-            //rysowanie
             Graphics graphics = tableLayoutPanel1.CreateGraphics();
             graphics.Clear(tableLayoutPanel1.BackColor);
             //TRZEBA PODMIENIC SCIEZKE
             Image image = Image.FromFile(@"C:\Users\BlueCompany\source\repos\JIPP_AM\JIPP_AM\person.png");
             var bmp = new Bitmap(image, new Size(pictureWidth, pictureHeight));
+            graphics.DrawImage(bmp, dx, dy);
+        }
+
+        void RotatePicture()
+        {
+            Graphics graphics = tableLayoutPanel1.CreateGraphics();
+            graphics.Clear(tableLayoutPanel1.BackColor);
+            //TRZEBA PODMIENIC SCIEZKE
+            Image image = Image.FromFile(@"C:\Users\BlueCompany\source\repos\JIPP_AM\JIPP_AM\person.png");
+            var bmp = new Bitmap(image, new Size(pictureWidth, pictureHeight));
+            bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
             graphics.DrawImage(bmp, dx, dy);
         }
     }
